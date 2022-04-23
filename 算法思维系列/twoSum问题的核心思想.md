@@ -1,4 +1,7 @@
-# twoSum问题的核心思想
+
+
+twoSum问题的核心思想
+======
 
 
 <p align='center'>
@@ -45,12 +48,12 @@ int[] twoSum(int[] nums, int target) {
 
 这个解法非常直接，时间复杂度 O(N^2)，空间复杂度 O(1)。
 
-可以通过一个哈希表减少时间复杂度：
+可以通过一个**哈希表**减少时间复杂度：
 
 ```java
 int[] twoSum(int[] nums, int target) {
     int n = nums.length;
-    index<Integer, Integer> index = new HashMap<>();
+    Map<Integer, Integer> index = new HashMap<>();
     // 构造一个哈希表：元素映射到相应的索引
     for (int i = 0; i < n; i++)
         index.put(nums[i], i);
@@ -66,9 +69,12 @@ int[] twoSum(int[] nums, int target) {
 }
 ```
 
-这样，由于哈希表的查询时间为 O(1)，算法的时间复杂度降低到 O(N)，但是需要 O(N) 的空间复杂度来存储哈希表。不过综合来看，是要比暴力解法高效的。
+这样，由于哈希表的查询时间为 O(1)，算法的时间复杂度降低到 O(N)，但是需要 O(N) 的空间复杂度来存储哈希表。
+不过综合来看，是要比暴力解法高效的。
 
-**我觉得 Two Sum 系列问题就是想教我们如何使用哈希表处理问题**。我们接着往后看。
+我觉得 **Two Sum 系列问题就是想教我们如何使用_哈希表_处理问题**。
+我们接着往后看。
+
 
 ### TwoSum II
 
@@ -119,9 +125,12 @@ class TwoSum {
 
 对于这个解法的时间复杂度呢，`add` 方法是 O(1)，`find` 方法是 O(N)，空间复杂度为 O(N)，和上一道题目比较类似。
 
-**但是对于 API 的设计，是需要考虑现实情况的**。比如说，我们设计的这个类，使用 `find` 方法非常频繁，那么每次都要 O(N) 的时间，岂不是很浪费费时间吗？对于这种情况，我们是否可以做些优化呢？
+**但是对于 API 的设计，是需要考虑现实情况的**。比如说，我们设计的这个类，
+使用 `find` 方法非常频繁，那么每次都要 O(N) 的时间，岂不是很浪费费时间吗？
+对于这种情况，我们是否可以做些优化呢？
 
-是的，对于频繁使用 `find` 方法的场景，我们可以进行优化。我们可以参考上一道题目的暴力解法，借助**哈希集合**来针对性优化 `find` 方法：
+是的，对于频繁使用 `find` 方法的场景，我们可以进行优化。
+我们可以参考上一道题目的暴力解法，借助**哈希集合**来针对性优化 `find` 方法：
 
 ```java
 class TwoSum {
@@ -141,13 +150,17 @@ class TwoSum {
 }
 ```
 
-这样 `sum` 中就储存了所有加入数字可能组成的和，每次 `find` 只要花费 O(1) 的时间在集合中判断一下是否存在就行了，显然非常适合频繁使用 `find` 的场景。
+这样 `sum` 中就储存了所有加入数字可能组成的和，每次 `find` 只要花费 O(1) 的时间在集合中判断一下是否存在就行了，
+显然非常适合频繁使用 `find` 的场景。
+
 
 ### 三、总结
 
-对于 TwoSum 问题，一个难点就是给的数组**无序**。对于一个无序的数组，我们似乎什么技巧也没有，只能暴力穷举所有可能。
+对于 TwoSum 问题，一个难点就是给的数组**无序**。
+对于一个无序的数组，我们似乎什么技巧也没有，只能暴力穷举所有可能。
 
-**一般情况下，我们会首先把数组排序再考虑双指针技巧**。TwoSum 启发我们，HashMap 或者 HashSet 也可以帮助我们处理无序数组相关的简单问题。
+**一般情况下，我们会首先把数组排序再考虑双指针技巧**。
+TwoSum 启发我们，HashMap 或者 HashSet 也可以帮助我们处理无序数组相关的简单问题。
 
 另外，设计的核心在于权衡，利用不同的数据结构，可以得到一些针对性的加强。
 
@@ -182,119 +195,4 @@ int[] twoSum(int[] nums, int target) {
 <p align='center'>
 <img src="../pictures/qrcode.jpg" width=200 >
 </p>
-======其他语言代码======
-
-[1.两数之和](https://leetcode-cn.com/problems/two-sum)
-
-[170.两数之和 III - 数据结构设计](https://leetcode-cn.com/problems/two-sum-iii-data-structure-design)
-
-
-
-### python
-
-由[JodyZ0203](https://github.com/JodyZ0203)提供 1. Two Sums Python3 解法代码:
-
-只用一个哈希表
-
-```python
-class Solution:
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        # 提前构造一个哈希表
-        hashTable = {}
-        # 寻找两个目标数值
-        for i, n in enumerate(nums):
-            other_num = target - n
-            # 如果存在这个余数 other_num
-            if other_num in hashTable.keys():
-                # 查看是否存在哈希表里，如果存在的话就返回数组
-                return [i, hashTable[other_num]]
-            # 如果不存在的话继续处理剩余的数
-            hashTable[n] = i
-```
-
-
-
-### javascript
-
-[1.两数之和](https://leetcode-cn.com/problems/two-sum)
-
-穷举
-
-```js
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-var twoSum = function (nums, target) {
-    for (let i = 0; i < nums.length; i++)
-        for (let j = i + 1; j < nums.length; j++)
-            if (nums[j] === target - nums[i])
-                return [i, j];
-
-    // 不存在这么两个数
-    return [-1, -1];
-};
-```
-
-备忘录
-
-```js
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-var twoSum = function (nums, target) {
-    let n = nums.length;
-    let index = new Map();
-    // 构造一个哈希表：元素映射到相应的索引
-    for (let i = 0; i < n; i++)
-        index.set(nums[i], i);
-
-    for (let i = 0; i < n; i++) {
-        let other = target - nums[i];
-        // 如果 other 存在且不是 nums[i] 本身
-        if (index.has(other) && index.get(other) !== i)
-            return [i, index.get(other)];
-    }
-
-    // 不存在这么两个数
-    return [-1, -1];
-};
-```
-
-
-
-[170.两数之和 III - 数据结构设计](https://leetcode-cn.com/problems/two-sum-iii-data-structure-design)
-
-哈希集合优化。
-
-```js
-class TwoSum {
-    constructor() {
-        this.sum = new Set();
-        this.nums = [];
-    }
-
-    // 向数据结构中添加一个数 number
-    add(number) {
-        // 记录所有可能组成的和
-        for (let n of this.nums) {
-            this.sum.push(n + number)
-        }
-        this.nums.add(number);
-    }
-
-    // 寻找当前数据结构中是否存在两个数的和为 value
-    find(value) {
-        return this.sum.has(value);
-    }
-}
-```
 
